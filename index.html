@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="barcodeGenerator">
+            <h1> Barcode generator</h1>
+            <input type="text" id="value">
+            <button onclick="generateBarcode()">Generate Barcode</button>
+            <div class="a">
+                <div class="b">
+                    <br>
+                    <button onclick="dWidth()">-</button>
+                    <label> Width </label>
+                    <button onclick="iWidth()">+</button>
+                    <br>
+                    <br>
+                    <button onclick="dHeight()">-</button>
+                    <label> Height </label>
+                    <button onclick="iHeight()">+</button>
+                    <br>
+                    <br>
+                    <button onclick="dFont()">-</button>
+                    <label> Font size </label>
+                    <button onclick="iFont()">+</button>
+                    <br>
+                    <br>
+                    <label>Change color:</label>
+                    <input oninput="updateColor()" type="color" id="color">
+                </div>
+                <div class="c">
+                    <br>
+                    <label>Show value</label>
+                    <br>
+                    <br>
+                    <label onclick="value()" class="switch">
+                        <input id="check" type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <br>
+                    <br>
+                    <label> Pick format </label> <br>
+                    <select id="format" oninput="updateFormat()">
+                        <option value="CODE128">CODE128</option>
+                        <option value="CODE39">CODE39</option>
+                        <option value="ITF14">ITF-14</option>
+                        <option value="EAN13">EAN-13</option>
+                        <option value="EAN8">EAN-8</option>
+                        <option value="EAN5">EAN-5</option>
+                        <option value="EAN2">EAN-2</option>
+                        <option value="UPC">UPC-A</option>
+                        <option value="MSI">MSI</option>
+                        <option value="MSI10">MSI10</option>
+                        <option value="MSI11">MSI11</option>
+                        <option value="MSI1010">MSI1010</option>
+                        <option value="MSI1110">MSI1110</option>
+                        <option value="pharmacode">pharmacode</option>
+                    </select>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="barcodeData">
+            <p> Width: <label id="width"> -- </label></p>
+            <p> Height: <label id="height"> -- </label></p>
+            <p> Font size: <label id="fontSize"> -- </label></p>
+        </div>
+    </div>
+    <br>
+    <svg id="barcode"></svg>
+</body>
+<script>
+    let defaultWidth = 2;
+    let defaultHeight = 55;
+    let DisplayValue = true;
+    let color = '#000000';
+    let fontSize = 20;
+    let Format = document.getElementById("format").value;
+    function generateBarcode() {
+        let barcodeInput = document.getElementById("value").value;
+        JsBarcode("#barcode", barcodeInput, {
+            format: Format,
+            width: defaultWidth,
+            height: defaultHeight,
+            displayValue: DisplayValue,
+            lineColor: color,
+            fontSize: fontSize,
+        });
+        document.getElementById("width").innerHTML = defaultWidth;
+        document.getElementById("height").innerHTML = defaultHeight;
+        document.getElementById("fontSize").innerHTML = fontSize;
+    }
+
+    function value() {
+        if(document.getElementById("check").checked) {
+            DisplayValue = true;
+        } else {
+            DisplayValue = false;
+        }
+        generateBarcode();
+    }
+    function dWidth() {
+        if(defaultWidth > 1) {
+            defaultWidth--;
+        }
+        generateBarcode();
+    }
+    function iWidth() {
+        defaultWidth++;
+        generateBarcode();
+    }
+    function dHeight() {
+        if(defaultHeight > 1) {
+            defaultHeight--;
+        }
+        generateBarcode();
+    }
+    function iHeight() {
+        defaultHeight++;
+        generateBarcode();
+    }
+    function updateColor() {
+        let value = document.getElementById("color").value;
+        color = value;
+        generateBarcode();
+    }
+    function dFont() {
+        if(fontSize > 1) {
+            fontSize--;
+        }
+        generateBarcode();
+    }
+    function iFont() {
+        fontSize++;
+        generateBarcode();
+    }
+    function updateFormat() {
+        Format = document.getElementById("format").value;
+        generateBarcode();
+    }
+</script>
+</html>

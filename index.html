@@ -62,7 +62,9 @@
                         <option value="MSI1110">MSI1110</option>
                         <option value="pharmacode">pharmacode</option>
                     </select>
-                    
+                    <br>
+                    <br>
+                    <button type="button" onclick="info()" id="info"> Learn more</button>
                 </div>
             </div>
         </div>
@@ -74,6 +76,14 @@
     </div>
     <br>
     <svg id="barcode"></svg>
+
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modalText"></p>
+        </div>
+    </div>
 </body>
 <script>
     let defaultWidth = 2;
@@ -144,5 +154,42 @@
         Format = document.getElementById("format").value;
         generateBarcode();
     }
+    function info() {
+        var modal = document.getElementById('myModal');
+            var modalText = document.getElementById('modalText');
+            modalText.innerHTML = `
+            <ul>
+                <li><strong>CODE128</strong>: High-density, alphanumeric barcode. Ex: <code>1234567890AB</code></li>
+    <li><strong>CODE39</strong>: Alphanumeric barcode with a limited character set. Ex: <code>BOOK1234</code></li>
+    <li><strong>ITF-14</strong>: Used for packaging and logistics, numeric-only. Ex: <code>01234567890123</code></li>
+    <li><strong>EAN-13</strong>: Standard 13-digit barcode for retail products. Ex: <code>9781234567890</code></li>
+    <li><strong>EAN-8</strong>: Shortened 8-digit version of EAN-13. Ex: <code>12345678</code></li>
+    <li><strong>EAN-5</strong>: Used as an add-on to EAN-13 for additional information. Ex: <code>9781234567890-12</code></li>
+    <li><strong>EAN-2</strong>: Used as an add-on to EAN-13 for supplementary information. Ex: <code>9781234567890-01</code></li>
+    <li><strong>UPC-A</strong>: 12-digit barcode used in retail, similar to EAN-13. Ex: <code>012345678912</code></li>
+    <li><strong>MSI</strong>: Numeric-only barcode, used in industrial and retail environments. Ex: <code>123456789</code></li>
+    <li><strong>MSI10</strong>: Variant of MSI with a 10-digit length. Ex: <code>1234567890</code></li>
+    <li><strong>MSI11</strong>: Variant of MSI with an 11-digit length. Ex: <code>12345678901</code></li>
+    <li><strong>MSI1010</strong>: MSI with a 10-digit length and check digit. Ex: <code>1234567890-1</code></li>
+    <li><strong>MSI1110</strong>: MSI with an 11-digit length and check digit. Ex: <code>12345678901-2</code></li>
+    <li><strong>Pharmacode</strong>: Used in pharmaceuticals for product identification. Ex: <code>12345</code></li>
+            </ul>
+            `;
+
+            modal.style.display = "block";
+    }
+    function closeModal() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = "none";
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById('myModal');
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
 </script>
 </html>

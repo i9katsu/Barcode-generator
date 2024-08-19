@@ -33,6 +33,10 @@
                     <br>
                     <label>Change color:</label>
                     <input oninput="updateColor()" type="color" id="color">
+                    <br>
+                    <br>
+                    <label>Barcode size</label>
+                    <input oninput="changeSize()" type="range" id="size" value="0" name="vol" min="0" max="70" step="1">
                 </div>
                 <div class="c">
                     <br>
@@ -91,6 +95,7 @@
     let DisplayValue = true;
     let color = '#000000';
     let fontSize = 20;
+    let scale = 1;
     let Format = document.getElementById("format").value;
     function generateBarcode() {
         let barcodeInput = document.getElementById("value").value;
@@ -105,6 +110,8 @@
         document.getElementById("width").innerHTML = defaultWidth;
         document.getElementById("height").innerHTML = defaultHeight;
         document.getElementById("fontSize").innerHTML = fontSize;
+
+        document.getElementById("barcode").style.transform = `scale(${scale})`;
     }
 
     function value() {
@@ -190,6 +197,13 @@
             modal.style.display = "none";
         }
     }
+
+    function changeSize() {
+    const svg = document.getElementById("barcode");
+    const slider = document.getElementById("size");
+    scale = 1 + (slider.value / 100);
+    svg.style.transform = `scale(${scale})`;
+}
 
 </script>
 </html>

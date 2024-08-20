@@ -14,11 +14,11 @@ input[type="text"] {
 }
 
 /* .barcodeGenerator {
-    float: left;
-}
-.barcodeData {
-    float: right;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
 } */
+
 
 .container {
     display: flex;
@@ -87,13 +87,15 @@ input[type="text"] {
 
   .a {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    
   }
-
+  .b,.c, .d {
+    padding: 20px;
+  }
   #barcode {
     text-align: center;
   }
-
 
 
 
@@ -145,4 +147,25 @@ li {
 
 code {
     background-color: #ddd8d8;
+}
+
+.barcodeContainer {
+  border: 1px solid black;
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#textValue {
+  font-size: 20px
+}
+
+/* svg {
+  border: 1px solid black;
+} */
+
+#widthInput, #heightInput {
+  width: 45px;
+  font-size: 15px;
+  text-align: center;
 }

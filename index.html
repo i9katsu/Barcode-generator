@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1> Barcode generator</h1>
+    <input type="text" id="value">
+    <button onclick="generateBarcode()">Generate Barcode</button>
     <div class="container">
         <div class="barcodeGenerator">
-            <h1> Barcode generator</h1>
-            <input type="text" id="value">
-            <button onclick="generateBarcode()">Generate Barcode</button>
             <div class="a">
                 <div class="b">
                     <br>
@@ -35,8 +35,7 @@
                     <input oninput="updateColor()" type="color" id="color">
                     <br>
                     <br>
-                    <label>Barcode size</label>
-                    <input oninput="changeSize()" type="range" id="size" value="0" name="vol" min="0" max="70" step="1">
+                   
                 </div>
                 <div class="c">
                     <br>
@@ -70,6 +69,39 @@
                     <br>
                     <button type="button" onclick="info()" id="info"> Learn more</button>
                 </div>
+                <div class="d">
+                    <!-- <br>
+                    <label>Barcode size</label>
+                    <input oninput="changeSize()" type="range" id="size" value="0" name="vol" min="0" max="70" step="1">
+                    <br> -->
+                    <br>
+                    <label> Text position: </label> 
+                    <select id="position" oninput="updatePosition()">
+                        <option value="bottom">Bottom</option>
+                        <option value="top">Top</option>
+                    </select>
+                    <br>
+                    <br>
+                    <label> Text align: </label> 
+                    <select id="align" oninput="textAlign()">
+                        <option value="center">Center</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+                    <br>
+                    <br>
+                    <input type="text" id="personalText" placeholder="Enter company name" oninput="generateBarcode()">
+                    <br>
+                    <br>
+                    <label> Svg size:</label>
+                    <input type="text" id="widthInput" placeholder="width"> 
+                    <label>x</label>
+                    <input type="text" id="heightInput" placeholder="height">
+                    <br>
+                    <br>
+                    <button type="button" onclick="updateSize()"> Update</button>
+
+                </div>
             </div>
         </div>
         <div class="barcodeData">
@@ -79,8 +111,12 @@
         </div>
     </div>
     <br>
-    <svg id="barcode"></svg>
 
+    <div class="barcodeContainer">
+        <svg id="barcode"></svg>
+    </div>
+    <br>
+    <button type="button" onclick="printSVG()"> Print</button>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -97,8 +133,15 @@
     let fontSize = 20;
     let scale = 1;
     let Format = document.getElementById("format").value;
+    let pos = document.getElementById("position").value;
+    let align = document.getElementById("align").value;
+
+    
+    let barcodeInput = document.getElementById("value").value;
+    
+
     function generateBarcode() {
-        let barcodeInput = document.getElementById("value").value;
+        barcodeInput = document.getElementById("value").value;
         JsBarcode("#barcode", barcodeInput, {
             format: Format,
             width: defaultWidth,
@@ -106,13 +149,55 @@
             displayValue: DisplayValue,
             lineColor: color,
             fontSize: fontSize,
+            textPosition: pos,
+            textAlign: align,
+            text: barcodeInput,
+            margin: 10,
+        marginTop: 40,
+        marginBottom: 10
         });
+
+        console.log("Barcode generated");
+
         document.getElementById("width").innerHTML = defaultWidth;
         document.getElementById("height").innerHTML = defaultHeight;
         document.getElementById("fontSize").innerHTML = fontSize;
 
         document.getElementById("barcode").style.transform = `scale(${scale})`;
+        
+    
+        
+    const svg = document.getElementById("barcode");
+    svg.setAttribute("height", parseInt(svg.getAttribute("height")) + 30);
+    let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    let PersonalText = document.getElementById("personalText").value;
+    text.setAttribute("x", "50%");
+    text.setAttribute("y", "30");
+    text.setAttribute("text-anchor", "middle");
+    text.setAttribute("font-family", "Arial, sans-serif");
+    text.setAttribute("font-size", fontSize + "px");
+    text.setAttribute("fill", color);
+    text.setAttribute("style", "z-index: 1000;");
+    text.textContent = PersonalText;
+    console.log(text);
+    svg.appendChild(text);
     }
+
+function updateSize() {
+  let widthInput = document.getElementById("widthInput").value;
+  let heightInput = document.getElementById("heightInput").value;
+
+  if (widthInput != "" && heightInput != "") {
+    document.getElementById("barcode").setAttribute("width", widthInput + "px");
+    document.getElementById("barcode").setAttribute("height", heightInput + "px");
+  } else if (widthInput != "" && heightInput == "") {
+    document.getElementById("barcode").setAttribute("width", widthInput + "px");
+  } else if (heightInput != "" && widthInput == "") {
+    document.getElementById("barcode").setAttribute("height", heightInput + "px");
+  }
+  console.log("Size updated");
+  console.log(document.getElementById("barcode"))
+}
 
     function value() {
         if(document.getElementById("check").checked) {
@@ -203,6 +288,26 @@
     const slider = document.getElementById("size");
     scale = 1 + (slider.value / 100);
     svg.style.transform = `scale(${scale})`;
+}
+
+    function updatePosition() {
+        pos = document.getElementById("position").value;
+        generateBarcode();
+    }
+
+    function textAlign() {
+        align = document.getElementById("align").value;
+        generateBarcode();
+    }
+
+    function printSVG() {
+  var svg = document.getElementById("barcode");
+
+  var printWindow = window.open("", "_blank","width=1000,height=1000");
+
+  printWindow.document.write(svg.outerHTML);
+  printWindow.document.close();
+  printWindow.print();
 }
 
 </script>

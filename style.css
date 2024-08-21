@@ -93,9 +93,8 @@ input[type="text"] {
   .b,.c, .d {
     padding: 20px;
   }
-  #barcode {
-    text-align: center;
-  }
+
+
 
 
 
@@ -149,13 +148,18 @@ code {
     background-color: #ddd8d8;
 }
 
-.barcodeContainer {
+#barcodeContainer {
   border: 1px solid black;
-  width: auto;
-  display: flex;
-  justify-content: center;
+  /* width: auto; */
+  display: inline-block;
+  /* margin: 0 auto; */
+  /* display: flex; */
+  /* justify-content: center; */
 }
-
+#barcode {
+  text-align: center;
+  display: block;
+}
 #textValue {
   font-size: 20px
 }
@@ -169,3 +173,69 @@ code {
   font-size: 15px;
   text-align: center;
 }
+
+text {
+  cursor: move;
+}
+
+/* #advance {
+  display: none;
+} */
+
+#checkButton {
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  padding: 0px;
+  cursor: pointer;
+}
+
+#print {
+  background-color: transparent;
+  width: 100px;
+}
+
+#simple > * {
+  margin: 0 20px;
+}
+/* .container> * {
+  margin: 0 20px;
+} */
+
+#advanceIMG {
+  background-color: transparent;
+  width: 20px;
+}
+
+.inline-icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inline-icon-button img {
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+}
+#advanceButton,#simpleButton, #generateButton, #print {
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.input-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-button-container > * {
+  margin: 0 10px;
+}
+
+#print:hover {
+  background-color:#ddd8d875;
+}
+
+

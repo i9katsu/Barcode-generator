@@ -9,12 +9,14 @@
 </head>
 <body>
     <h1> Barcode generator</h1>
-    <input type="text" id="value">
-    <button onclick="generateBarcode()">Generate Barcode</button>
+    <div class="input-button-container">
+        <input type="text" id="value">
+        <button onclick="generateBarcode()" id="generateButton" class="inline-icon-button"> <img id="generateIMG" src="https://www.svgviewer.dev/static-svgs/416289/sparkles.svg" alt=""> Generate Barcode </button>
+    </div>
     <div class="container">
         <div class="barcodeGenerator">
             <div class="a">
-                <div class="b">
+                <div class="b" id="b" style="display: none;">
                     <br>
                     <button onclick="dWidth()">-</button>
                     <label> Width </label>
@@ -35,9 +37,8 @@
                     <input oninput="updateColor()" type="color" id="color">
                     <br>
                     <br>
-                   
                 </div>
-                <div class="c">
+                <div class="c" id="c" style="display: none;">
                     <br>
                     <label>Show value</label>
                     <br>
@@ -69,12 +70,12 @@
                     <br>
                     <button type="button" onclick="info()" id="info"> Learn more</button>
                 </div>
-                <div class="d">
+                <div class="d" id="d">
                     <!-- <br>
                     <label>Barcode size</label>
                     <input oninput="changeSize()" type="range" id="size" value="0" name="vol" min="0" max="70" step="1">
                     <br> -->
-                    <br>
+                    <!-- <br>
                     <label> Text position: </label> 
                     <select id="position" oninput="updatePosition()">
                         <option value="bottom">Bottom</option>
@@ -97,26 +98,67 @@
                     <input type="text" id="widthInput" placeholder="width"> 
                     <label>x</label>
                     <input type="text" id="heightInput" placeholder="height">
+                    <button id="checkButton" type="button" onclick="updateSize()"> &#x2714</button> -->
+                    <div class="container" id="simple">
+                        <div class="simple">
+                            <br>
+                            <label> Text position: </label>
+                            <select id="position" oninput="updatePosition()">
+                                <option value="bottom">Bottom</option>
+                                <option value="top">Top</option>
+                            </select>
+                            <br>
+                            <br>
+                            <label> Text align: </label>
+                            <select id="align" oninput="textAlign()">
+                                <option value="center">Center</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                            </select>
+                            <br>
+                            <br>
+                            <input type="text" id="personalText" placeholder="Enter company name" oninput="generateBarcode()">
+                            <br>
+                            <br>
+                            <label> Svg size:</label>
+                            <input type="text" id="widthInput" placeholder="width">
+                            <label>x</label>
+                            <input type="text" id="heightInput" placeholder="height">&#160
+                            <button id="checkButton" type="button" onclick="updateSize()"> &#x2714</button>
+                        </div>
+                        <div>
+                            <br>
+                            <br>
+                            <br>
+                            <button type="button" id="advanceButton" class="inline-icon-button" onclick="advance()">
+                                Advance Mode <img src="https://www.svgrepo.com/show/131974/settings.svg" id="advanceIMG">
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="barcodeData" id="barcodeData" style="display: none;">
                     <br>
+                    <p> Width: <label id="width"> -- </label></p>
+                    <p> Height: <label id="height"> -- </label></p>
+                    <p> Font size: <label id="fontSize"> -- </label></p>
                     <br>
-                    <button type="button" onclick="updateSize()"> Update</button>
-
+                    <button id="simpleButton" type="button" onclick="simple()"> Simple Mode</button>
+        
                 </div>
             </div>
+            
         </div>
-        <div class="barcodeData">
-            <p> Width: <label id="width"> -- </label></p>
-            <p> Height: <label id="height"> -- </label></p>
-            <p> Font size: <label id="fontSize"> -- </label></p>
-        </div>
+
     </div>
     <br>
 
-    <div class="barcodeContainer">
+    <div id="barcodeContainer">
         <svg id="barcode"></svg>
     </div>
     <br>
-    <button type="button" onclick="printSVG()"> Print</button>
+    <br>
+    <button id="print" type="button" onclick="printSVG()"> <img src="https://cdn-icons-png.flaticon.com/512/159/159287.png" width="45px" alt=""> </button>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -125,190 +167,5 @@
         </div>
     </div>
 </body>
-<script>
-    let defaultWidth = 2;
-    let defaultHeight = 55;
-    let DisplayValue = true;
-    let color = '#000000';
-    let fontSize = 20;
-    let scale = 1;
-    let Format = document.getElementById("format").value;
-    let pos = document.getElementById("position").value;
-    let align = document.getElementById("align").value;
-
-    
-    let barcodeInput = document.getElementById("value").value;
-    
-
-    function generateBarcode() {
-        barcodeInput = document.getElementById("value").value;
-        JsBarcode("#barcode", barcodeInput, {
-            format: Format,
-            width: defaultWidth,
-            height: defaultHeight,
-            displayValue: DisplayValue,
-            lineColor: color,
-            fontSize: fontSize,
-            textPosition: pos,
-            textAlign: align,
-            text: barcodeInput,
-            margin: 10,
-        marginTop: 40,
-        marginBottom: 10
-        });
-
-        console.log("Barcode generated");
-
-        document.getElementById("width").innerHTML = defaultWidth;
-        document.getElementById("height").innerHTML = defaultHeight;
-        document.getElementById("fontSize").innerHTML = fontSize;
-
-        document.getElementById("barcode").style.transform = `scale(${scale})`;
-        
-    
-        
-    const svg = document.getElementById("barcode");
-    svg.setAttribute("height", parseInt(svg.getAttribute("height")) + 30);
-    let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    let PersonalText = document.getElementById("personalText").value;
-    text.setAttribute("x", "50%");
-    text.setAttribute("y", "30");
-    text.setAttribute("text-anchor", "middle");
-    text.setAttribute("font-family", "Arial, sans-serif");
-    text.setAttribute("font-size", fontSize + "px");
-    text.setAttribute("fill", color);
-    text.setAttribute("style", "z-index: 1000;");
-    text.textContent = PersonalText;
-    console.log(text);
-    svg.appendChild(text);
-    }
-
-function updateSize() {
-  let widthInput = document.getElementById("widthInput").value;
-  let heightInput = document.getElementById("heightInput").value;
-
-  if (widthInput != "" && heightInput != "") {
-    document.getElementById("barcode").setAttribute("width", widthInput + "px");
-    document.getElementById("barcode").setAttribute("height", heightInput + "px");
-  } else if (widthInput != "" && heightInput == "") {
-    document.getElementById("barcode").setAttribute("width", widthInput + "px");
-  } else if (heightInput != "" && widthInput == "") {
-    document.getElementById("barcode").setAttribute("height", heightInput + "px");
-  }
-  console.log("Size updated");
-  console.log(document.getElementById("barcode"))
-}
-
-    function value() {
-        if(document.getElementById("check").checked) {
-            DisplayValue = true;
-        } else {
-            DisplayValue = false;
-        }
-        generateBarcode();
-    }
-    function dWidth() {
-        if(defaultWidth > 1) {
-            defaultWidth--;
-        }
-        generateBarcode();
-    }
-    function iWidth() {
-        defaultWidth++;
-        generateBarcode();
-    }
-    function dHeight() {
-        if(defaultHeight > 1) {
-            defaultHeight--;
-        }
-        generateBarcode();
-    }
-    function iHeight() {
-        defaultHeight++;
-        generateBarcode();
-    }
-    function updateColor() {
-        let value = document.getElementById("color").value;
-        color = value;
-        generateBarcode();
-    }
-    function dFont() {
-        if(fontSize > 1) {
-            fontSize--;
-        }
-        generateBarcode();
-    }
-    function iFont() {
-        fontSize++;
-        generateBarcode();
-    }
-    function updateFormat() {
-        Format = document.getElementById("format").value;
-        generateBarcode();
-    }
-    function info() {
-        var modal = document.getElementById('myModal');
-            var modalText = document.getElementById('modalText');
-            modalText.innerHTML = `
-            <ul>
-                <li><strong>CODE128</strong>: High-density, alphanumeric barcode. Ex: <code>1234567890AB</code></li>
-    <li><strong>CODE39</strong>: Alphanumeric barcode with a limited character set. Ex: <code>BOOK1234</code></li>
-    <li><strong>ITF-14</strong>: Used for packaging and logistics, numeric-only. Ex: <code>01234567890123</code></li>
-    <li><strong>EAN-13</strong>: Standard 13-digit barcode for retail products. Ex: <code>9781234567890</code></li>
-    <li><strong>EAN-8</strong>: Shortened 8-digit version of EAN-13. Ex: <code>12345678</code></li>
-    <li><strong>EAN-5</strong>: Used as an add-on to EAN-13 for additional information. Ex: <code>9781234567890-12</code></li>
-    <li><strong>EAN-2</strong>: Used as an add-on to EAN-13 for supplementary information. Ex: <code>9781234567890-01</code></li>
-    <li><strong>UPC-A</strong>: 12-digit barcode used in retail, similar to EAN-13. Ex: <code>012345678912</code></li>
-    <li><strong>MSI</strong>: Numeric-only barcode, used in industrial and retail environments. Ex: <code>123456789</code></li>
-    <li><strong>MSI10</strong>: Variant of MSI with a 10-digit length. Ex: <code>1234567890</code></li>
-    <li><strong>MSI11</strong>: Variant of MSI with an 11-digit length. Ex: <code>12345678901</code></li>
-    <li><strong>MSI1010</strong>: MSI with a 10-digit length and check digit. Ex: <code>1234567890-1</code></li>
-    <li><strong>MSI1110</strong>: MSI with an 11-digit length and check digit. Ex: <code>12345678901-2</code></li>
-    <li><strong>Pharmacode</strong>: Used in pharmaceuticals for product identification. Ex: <code>12345</code></li>
-            </ul>
-            `;
-
-            modal.style.display = "block";
-    }
-    function closeModal() {
-            var modal = document.getElementById('myModal');
-            modal.style.display = "none";
-    }
-
-    // Close the modal when clicking outside of it
-    window.onclick = function(event) {
-        var modal = document.getElementById('myModal');
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    function changeSize() {
-    const svg = document.getElementById("barcode");
-    const slider = document.getElementById("size");
-    scale = 1 + (slider.value / 100);
-    svg.style.transform = `scale(${scale})`;
-}
-
-    function updatePosition() {
-        pos = document.getElementById("position").value;
-        generateBarcode();
-    }
-
-    function textAlign() {
-        align = document.getElementById("align").value;
-        generateBarcode();
-    }
-
-    function printSVG() {
-  var svg = document.getElementById("barcode");
-
-  var printWindow = window.open("", "_blank","width=1000,height=1000");
-
-  printWindow.document.write(svg.outerHTML);
-  printWindow.document.close();
-  printWindow.print();
-}
-
-</script>
+<script src="script.js"></script>
 </html>

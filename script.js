@@ -28,7 +28,7 @@ function generateBarcode() {
         marginTop: 40,
         marginBottom: 10
     });
-
+    updateSize();
     console.log("Barcode generated");
 
     document.getElementById("width").innerHTML = defaultWidth;

@@ -11,7 +11,7 @@
     <h1> Barcode generator</h1>
     <div class="input-button-container">
         <input type="text" id="value">
-        <button onclick="generateBarcode()" id="generateButton" class="inline-icon-button"> <img id="generateIMG" src="https://www.svgviewer.dev/static-svgs/416289/sparkles.svg" alt=""> Generate Barcode </button>
+        <button title="This button will turn the value you've entered into a barcode." onclick="generateBarcode()" id="generateButton" class="inline-icon-button"> <img id="generateIMG" src="https://www.svgviewer.dev/static-svgs/416289/sparkles.svg" alt=""> Generate Barcode </button>
     </div>
     <div class="container">
         <div class="barcodeGenerator">
@@ -68,7 +68,7 @@
                     </select>
                     <br>
                     <br>
-                    <button type="button" onclick="info()" id="info"> Learn more</button>
+                    <button type="button" id="learnMore" class="input-button-container" onclick="info()" id="info"> Learn more <img id="infoIMG" src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/more-info-icon.png" alt=""></button>
                 </div>
                 <div class="d" id="d">
                     <!-- <br>

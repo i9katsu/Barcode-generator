@@ -176,6 +176,7 @@ code {
 
 text {
   cursor: move;
+  user-select: none;
 }
 
 /* #advance {
@@ -219,7 +220,7 @@ text {
   width: 20px;
   height: 20px;
 }
-#advanceButton,#simpleButton, #generateButton, #print {
+#advanceButton,#simpleButton, #generateButton, #print, #learnMore {
   border-radius: 20px;
   cursor: pointer;
 }
@@ -238,4 +239,23 @@ text {
   background-color:#ddd8d875;
 }
 
+
+/* svg {
+  border: 1px solid black;
+} */
+
+#infoIMG {
+  width: 20px;
+  margin: 0 0 0 5px;
+}
+
+
+.b button {
+  cursor: pointer;
+  border-radius: 20px;
+  width: 30px;
+  height: 20px;
+  text-align: center;
+  padding: 0px;
+}
 

@@ -14,6 +14,9 @@ let barcodeInput = document.getElementById("value").value;
 
 function generateBarcode() {
     barcodeInput = document.getElementById("value").value;
+    defaultWidth = parseInt(document.getElementById("widthSlider").value);
+    defaultHeight = parseInt(document.getElementById("heightSlider").value);
+    fontSize = parseInt(document.getElementById("fontSlider").value);
     JsBarcode("#barcode", barcodeInput, {
         format: Format,
         width: defaultWidth,
@@ -29,7 +32,7 @@ function generateBarcode() {
         marginBottom: 10
     });
     updateSize();
-    console.log("Barcode generated");
+    // console.log("Barcode generated");
 
     document.getElementById("width").innerHTML = defaultWidth;
     document.getElementById("height").innerHTML = defaultHeight;
@@ -38,7 +41,6 @@ function generateBarcode() {
     document.getElementById("barcode").style.transform = `scale(${scale})`;
     
 
-    
 const svg = document.getElementById("barcode");
 svg.setAttribute("height", parseInt(svg.getAttribute("height")) + 30);
 let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -50,8 +52,9 @@ text.setAttribute("font-family", "Arial, sans-serif");
 text.setAttribute("font-size", fontSize + "px");
 text.setAttribute("fill", color);
 text.setAttribute("style", "z-index: 1000;");
+text.classList.add("svgText");
 text.textContent = PersonalText;
-console.log(text);
+// console.log(text);
 svg.appendChild(text);
 
 
@@ -108,8 +111,8 @@ document.getElementById("barcode").setAttribute("width", widthInput + "px");
 } else if (heightInput != "" && widthInput == "") {
 document.getElementById("barcode").setAttribute("height", heightInput + "px");
 }
-console.log("Size updated");
-console.log(document.getElementById("barcode"))
+// console.log("Size updated");
+// console.log(document.getElementById("barcode"))
 }
 
 function value() {
@@ -121,23 +124,31 @@ function value() {
     generateBarcode();
 }
 function dWidth() {
-    if(defaultWidth > 1) {
-        defaultWidth--;
+    if (defaultWidth > 1) {
+        let widthSlider = document.getElementById("widthSlider");
+        widthSlider.value = parseInt(widthSlider.value) - 1;
+        widthSlider.dispatchEvent(new Event('input'));
     }
     generateBarcode();
 }
 function iWidth() {
-    defaultWidth++;
+    let widthSlider = document.getElementById("widthSlider");
+    widthSlider.value = parseInt(widthSlider.value) + 1;
+    widthSlider.dispatchEvent(new Event('input'));
     generateBarcode();
 }
 function dHeight() {
     if(defaultHeight > 1) {
-        defaultHeight--;
+        let heightSlider = document.getElementById("heightSlider");
+        heightSlider.value = parseInt(heightSlider.value) - 1;
+        heightSlider.dispatchEvent(new Event('input'));
     }
     generateBarcode();
 }
 function iHeight() {
-    defaultHeight++;
+    let heightSlider = document.getElementById('heightSlider');
+    heightSlider.value = parseInt(heightSlider.value) + 1;
+    heightSlider.dispatchEvent(new Event('input'));
     generateBarcode();
 }
 function updateColor() {
@@ -147,12 +158,16 @@ function updateColor() {
 }
 function dFont() {
     if(fontSize > 1) {
-        fontSize--;
+        let fontSlider = document.getElementById("fontSlider");
+        fontSlider.value = parseInt(fontSlider.value) - 1;
+        fontSlider.dispatchEvent(new Event('input'));
     }
     generateBarcode();
 }
 function iFont() {
-    fontSize++;
+    let fontSlider = document.getElementById('fontSlider');
+    fontSlider.value = parseInt(fontSlider.value) + 1;
+    fontSlider.dispatchEvent(new Event('input'));
     generateBarcode();
 }
 function updateFormat() {
@@ -245,3 +260,13 @@ function simple() {
     });
     document.getElementById("barcodeData").style.display="none";
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const sliders = document.querySelectorAll(".sliderInput");
+    sliders.forEach(element => {
+        element.addEventListener("input", () => {
+            console.log(element.value);
+            generateBarcode();
+        });
+    });
+});

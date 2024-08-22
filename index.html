@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Barcode-Generator</title>
     <script type="text/javascript" src="JsBarcode.all.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,15 +22,19 @@
                     <label> Width </label>
                     <button onclick="iWidth()">+</button>
                     <br>
+                    <input class="sliderInput" id="widthSlider" type="range" min="1" max="4" step="1" value="2">
                     <br>
                     <button onclick="dHeight()">-</button>
                     <label> Height </label>
                     <button onclick="iHeight()">+</button>
                     <br>
+                    <input class="sliderInput" id="heightSlider" type="range" min="25" max="120" step="1" value="55">
                     <br>
                     <button onclick="dFont()">-</button>
                     <label> Font size </label>
                     <button onclick="iFont()">+</button>
+                    <br>
+                    <input class="sliderInput" id="fontSlider" type="range" min="10" max="40" step="1" value="20">
                     <br>
                     <br>
                     <label>Change color:</label>
@@ -68,7 +72,7 @@
                     </select>
                     <br>
                     <br>
-                    <button type="button" id="learnMore" class="input-button-container" onclick="info()" id="info"> Learn more <img id="infoIMG" src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/more-info-icon.png" alt=""></button>
+                    <button title="Learn more about the different types of barcode formats and how they're are used." type="button" id="learnMore" class="input-button-container" onclick="info()" id="info"> Learn more <img id="infoIMG" src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/more-info-icon.png" alt=""></button>
                 </div>
                 <div class="d" id="d">
                     <!-- <br>

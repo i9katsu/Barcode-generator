@@ -263,3 +263,50 @@ code {
   padding: 0px;
 }
 
+#list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  background-color: rgb(0, 123, 255);
+  border-radius: 5px;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+#list li {
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 30px;
+  width: 90px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  color: white;
+}
+ul > * {
+  border: 1px solid white;
+  border-style: groove;
+  border-bottom-color: transparent;
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+#list li:last-child {
+  border-right: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#list li:hover {
+  background-color: #0056b3;
+}
+
+#list li.active {
+  background-color: rgba(0, 87, 179, 0.808);
+  color: white;
+}

@@ -218,12 +218,15 @@ scale = 1 + (slider.value / 100);
 svg.style.transform = `scale(${scale})`;
 }
 
-function updatePosition() {
+function updatePosition(option) {
+    document.getElementById("position").value = option;
     pos = document.getElementById("position").value;
+    // pos.dispatchEvent(new Event('input'));
     generateBarcode();
 }
 
-function textAlign() {
+function textAlign(option) {
+    document.getElementById('align').value = option;
     align = document.getElementById("align").value;
     generateBarcode();
 }

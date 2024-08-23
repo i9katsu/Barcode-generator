@@ -106,7 +106,11 @@
                     <div class="container" id="simple">
                         <div class="simple">
                             <br>
-                            <label> Text position: </label>
+                            <label id="pos"> Text position: </label>
+                            <ul id="list">
+                                <li class="active" onclick="updatePosition('bottom')">Bottom</li>
+                                <li onclick="updatePosition('top')">Top</li>
+                            </ul>
                             <select id="position" oninput="updatePosition()">
                                 <option value="bottom">Bottom</option>
                                 <option value="top">Top</option>
@@ -114,6 +118,11 @@
                             <br>
                             <br>
                             <label> Text align: </label>
+                            <ul id="list" class="list">
+                                <li onclick="textAlign('left')"> Left </li>
+                                <li onclick="textAlign('center')" class="active">Center</li>
+                                <li onclick="textAlign('right')">Right</li>
+                            </ul>
                             <select id="align" oninput="textAlign()">
                                 <option value="center">Center</option>
                                 <option value="left">Left</option>

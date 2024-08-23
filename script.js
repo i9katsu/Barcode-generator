@@ -229,13 +229,27 @@ function textAlign() {
 }
 
 function printSVG() {
-var svg = document.getElementById("barcode");
+    var svg = document.getElementById("barcode");
 
-var printWindow = window.open("", "_blank","width=1000,height=1000");
+    var width = 1000;
+    var height = 676;
 
-printWindow.document.write(svg.outerHTML);
-printWindow.document.close();
-printWindow.print();
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
+
+    var printWindow = window.open("", "_blank", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top);
+
+    printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
+    printWindow.document.write(svg.outerHTML);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+
+    printWindow.focus(); 
+    printWindow.print();
+    
+    setTimeout(function() {
+        printWindow.close();
+    }, 100);
 }
 
 

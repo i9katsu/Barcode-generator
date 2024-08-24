@@ -58,6 +58,7 @@ text.textContent = PersonalText;
 svg.appendChild(text);
 
 
+
 let isDragging = false;
 let currentX;
 let currentY;
@@ -220,13 +221,30 @@ svg.style.transform = `scale(${scale})`;
 
 function updatePosition(option) {
     document.getElementById("position").value = option;
+    const formattedOption = option.substring(0,1).toUpperCase() + option.substring(1).toLowerCase();
     pos = document.getElementById("position").value;
     // pos.dispatchEvent(new Event('input'));
+    document.querySelectorAll('.list1 li').forEach(
+        li => li.classList.remove('active')
+    );
+    const element = Array.from(document.querySelectorAll('.list1 li')).find(li => li.textContent.trim() === formattedOption);
+    if (element){
+        console.log('working.')
+        element.classList.add('active');
+    } else {
+        console.log('not working.')
+    }
     generateBarcode();
 }
 
 function textAlign(option) {
     document.getElementById('align').value = option;
+    const formattedOption = option.substring(0,1).toUpperCase() + option.substring(1).toLowerCase();
+    document.querySelectorAll('.list2 li').forEach(
+        li => li.classList.remove('active')
+    );
+    const element = Array.from(document.querySelectorAll('.list2 li')).find(li => li.textContent.trim() === formattedOption)
+    element.classList.add('active');
     align = document.getElementById("align").value;
     generateBarcode();
 }

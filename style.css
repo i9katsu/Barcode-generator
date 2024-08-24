@@ -310,3 +310,10 @@ ul > * {
   background-color: rgba(0, 87, 179, 0.808);
   color: white;
 }
+
+.subsim {
+  text-align: left;
+}
+#simple {
+  text-align: center;
+}

@@ -133,6 +133,7 @@
                             <br>
                             <br>
                             <input type="text" id="personalText" placeholder="Company / info" oninput="generateBarcode()">
+                            <input type="text" id="Price" placeholder="Price" oninput="generateBarcode()" style="width: 80px;">
                             <br>
                             <br>
                             <label> Svg size:</label>
@@ -174,7 +175,8 @@
     <br>
     <br>
     <button id="print" type="button" onclick="printSVG()"> <img src="https://cdn-icons-png.flaticon.com/512/159/159287.png" width="45px" alt=""> </button>
-    <button type="button" onclick="download()" style="display: none;"> Download </button>
+    <button type="button" onclick="download()" > Download </button>
+    <!-- <button type="button" onclick="testPrint()"> test print </button> -->
 
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -182,7 +184,6 @@
             <p id="modalText"></p>
         </div>
     </div>
-    
 </body>
 <script src="script.js"></script>
 </html>

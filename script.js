@@ -44,7 +44,9 @@ function generateBarcode() {
 const svg = document.getElementById("barcode");
 svg.setAttribute("height", parseInt(svg.getAttribute("height")) + 30);
 let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+let text1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 let PersonalText = document.getElementById("personalText").value;
+let Price = document.getElementById("Price").value;
 text.setAttribute("x", "50%");
 text.setAttribute("y", "30");
 text.setAttribute("text-anchor", "middle");
@@ -54,8 +56,19 @@ text.setAttribute("fill", color);
 text.setAttribute("style", "z-index: 1000;");
 text.classList.add("svgText");
 text.textContent = PersonalText;
+
+text1.setAttribute("x", "80%");
+text1.setAttribute("y", "92.5%");
+text1.setAttribute("text1-anchor", "middle");
+text1.setAttribute("font-family", "Arial, sans-serif");
+text1.setAttribute("font-size", fontSize + "px");
+text1.setAttribute("fill", color);
+text1.setAttribute("style", "z-index: 1000;");
+text1.classList.add("svgText");
+text1.textContent = Price;
 // console.log(text);
 svg.appendChild(text);
+svg.appendChild(text1);
 
 
 
@@ -67,15 +80,34 @@ let initialY;
 let xOffset = 0;
 let yOffset = 0;
 
+let isDragging1 = false;
+let currentX1;
+let currentY1;
+let initialX1;
+let initialY1;
+let xOffset1 = 0;
+let yOffset1 = 0;
+
 text.addEventListener("mousedown", dragStart);
 svg.addEventListener("mousemove", drag);
 svg.addEventListener("mouseup", dragEnd);
 svg.addEventListener("mouseleave", dragEnd);
 
+text1.addEventListener("mousedown", dragStart1);
+svg.addEventListener("mousemove", drag1);
+svg.addEventListener("mouseup", dragEnd1);
+svg.addEventListener("mouseleave", dragEnd1);
+
+
 function dragStart(e) {
     initialX = e.clientX - xOffset;
     initialY = e.clientY - yOffset;
     isDragging = true;
+}
+function dragStart1(e) {
+    initialX1 = e.clientX - xOffset1;
+    initialY1 = e.clientY - yOffset1;
+    isDragging1 = true;
 }
 
 function drag(e) {
@@ -88,15 +120,33 @@ function drag(e) {
         setTranslate(currentX, currentY, text);
     }
 }
+function drag1(e) {
+    if (isDragging1) {
+        e.preventDefault();
+        currentX1 = e.clientX - initialX1;
+        currentY1 = e.clientY - initialY1;
+        xOffset1 = currentX1;
+        yOffset1 = currentY1;
+        setTranslate1(currentX1, currentY1, text1);
+    }
+}
 
 function dragEnd(e) {
     initialX = currentX;
     initialY = currentY;
     isDragging = false;
 }
+function dragEnd1(e) {
+    initialX1 = currentX1;
+    initialY1 = currentY1;
+    isDragging1 = false;
+}
 
 function setTranslate(xPos, yPos, el) {
     el.setAttribute("transform", `translate(${xPos}, ${yPos})`);
+}
+function setTranslate1(xPos1, yPos1, el) {
+    el.setAttribute("transform", `translate(${xPos1}, ${yPos1})`);
 }
 }
 
@@ -251,6 +301,9 @@ function textAlign(option) {
 
 function printSVG() {
     var svg = document.getElementById("barcode");
+    // svg.style.width="188px";
+    // svg.style.height="94px";
+
 
     var width = 1000;
     var height = 676;
@@ -260,18 +313,85 @@ function printSVG() {
 
     var printWindow = window.open("", "_blank", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top);
 
-    printWindow.document.write('<html><head><title>Print Barcode</title></head><body>');
-    printWindow.document.write(svg.outerHTML);
-    printWindow.document.write('</body></html>');
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Print Barcode</title>
+            <style>
+                @page {margin: 0; }
+                body { margin: 0; display: flex; justify-content: center; align-items: center;}
+                svg { width: 100%; height: 100%; }
+            </style>
+        </head>
+        <body>
+            ${svg.outerHTML}
+        </body>
+        </html>
+    `);
+    
     printWindow.document.close();
 
-    printWindow.focus(); 
-    printWindow.print();
-    
-    setTimeout(function() {
-        printWindow.close();
-    }, 100);
+    // printWindow.onload = function() {
+    //     printWindow.focus();
+    //     printWindow.print();
+    //     setTimeout(function() {
+    //         printWindow.close();
+    //     }, 100);
+    // };
 }
+
+// function printSVG() {
+//     var svg = document.getElementById("barcode");
+
+//     // Calculate the aspect ratio of the SVG
+//     var svgWidth = svg.viewBox.baseVal.width || svg.clientWidth;
+//     var svgHeight = svg.viewBox.baseVal.height || svg.clientHeight;
+
+//     // Calculate scaling factors to fit within 2x4 inches
+//     var maxWidthInches = 4;
+//     var maxHeightInches = 2;
+
+//     var maxWidthPixels = maxWidthInches * 96; // 96 DPI is standard
+//     var maxHeightPixels = maxHeightInches * 96;
+
+//     var scaleX = maxWidthPixels / svgWidth;
+//     var scaleY = maxHeightPixels / svgHeight;
+
+//     var scale = Math.min(scaleX, scaleY);
+
+//     // Apply scaling to SVG
+//     svg.setAttribute("width", svgWidth * scale + "px");
+//     svg.setAttribute("height", svgHeight * scale + "px");
+
+//     // Create a new window for printing
+//     var printWindow = window.open('', '', 'width=200,height=400');
+    
+//     // Write the SVG content into the new window with CSS for correct print size
+//     printWindow.document.write(`
+//         <html>
+//         <head>
+//             <style>
+//                 @page { size: 4in 2in; margin: 0; }
+//                 body { margin: 0; }
+//                 svg { width: 2in; height: auto; max-height: 4in; }
+//             </style>
+//         </head>
+//         <body>
+//             ${svg.outerHTML}
+//         </body>
+//         </html>
+//     `);
+//     printWindow.document.close();
+//     printWindow.onload = function() {
+//         printWindow.focus();
+//         printWindow.print();
+//         setTimeout(function() {
+//             printWindow.close();
+//         }, 100);
+//     };
+// }
+
+
 
 
 function advance() {
